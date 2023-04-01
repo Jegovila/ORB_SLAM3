@@ -154,7 +154,7 @@ Execute the following script to process sequences and compute the RMS ATE:
 # 7. ROS Examples
 
 ### Building the nodes for mono, mono-inertial, stereo, stereo-inertial and RGB-D
-Tested with ROS Melodic and ubuntu 18.04.
+Tested with ROS Noetic and ubuntu 20.04.
 
 1. Add the path including *Examples/ROS/ORB_SLAM3* to the ROS_PACKAGE_PATH environment variable. Open .bashrc file:
   ```
