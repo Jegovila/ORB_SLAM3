@@ -180,6 +180,12 @@ For a monocular input from topic `/camera/image_raw` run node ORB_SLAM3/Mono. Yo
   rosrun ORB_SLAM3 Mono PATH_TO_VOCABULARY PATH_TO_SETTINGS_FILE
   ```
 
+UPDATE: Se agrega versión para que el nodo publique la pose de la cámara en el tópico /orbslam3/camerapose
+  ```
+  rosrun ORB_SLAM3 MonoPubPose
+  ```
+
+
 ### Running Monocular-Inertial Node
 For a monocular input from topic `/camera/image_raw` and an inertial input from topic `/imu`, run node ORB_SLAM3/Mono_Inertial. Setting the optional third argument to true will apply CLAHE equalization to images (Mainly for TUM-VI dataset).
 
