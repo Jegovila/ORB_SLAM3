@@ -180,7 +180,7 @@ For a monocular input from topic `/camera/image_raw` run node ORB_SLAM3/Mono. Yo
   rosrun ORB_SLAM3 Mono PATH_TO_VOCABULARY PATH_TO_SETTINGS_FILE
   ```
 
-UPDATE: Se agrega versión para que el nodo publique la pose de la cámara en el tópico /orbslam3/camerapose. El archivo Voc y Settings debe agregarse en el archivo ROS/ORB_SLAM3/src/ros_mono.cc
+UPDATE: Se agrega versión para que el nodo publique la pose de la cámara en el tópico /orb_slam3/camera_pose. El archivo Voc y Settings debe agregarse en el archivo ROS/ORB_SLAM3/src/ros_mono.cc
   ```
   rosrun ORB_SLAM3 MonoPubPose
   ```
