@@ -3,7 +3,17 @@
 * Adapted from ORB-SLAM3: Examples/ROS/src/ros_mono.cc
 *
 */
+#include<iostream>
+#include<algorithm>
+#include<fstream>
+#include<chrono>
 
+#include<ros/ros.h>
+#include <cv_bridge/cv_bridge.h>
+
+#include<opencv2/core/core.hpp>
+
+#include"../../../../include/System.h"
 #include "../../../../include/common.h"
 #include "common.cc"
 
@@ -37,7 +47,7 @@ int main(int argc, char **argv)
     node_handler.param<std::string>(node_name + "/settings_file", settings_file, "file_not_set");
 
     voc_file = "/home/javier/ORB_SLAM3/Vocabulary/ORBvoc.txt";
-    settings_file = "/home/javier/ORB_SLAM3/Examples_old/Monocular/logi.yaml";
+    settings_file = "/home/javier/ORB_SLAM3/Examples_old/Monocular/tello.yaml";
 	
     if (voc_file == "file_not_set" || settings_file == "file_not_set")
     {
@@ -66,12 +76,12 @@ int main(int argc, char **argv)
     ORB_SLAM3::System SLAM(voc_file, settings_file, sensor_type, enable_pangolin);
     ImageGrabber igb(&SLAM);
 
-    ros::Subscriber sub_img0 = node_handler.subscribe("/usb_cam/image_raw", 1, &ImageGrabber::GrabImage, &igb);
+    ros::Subscriber sub_img0 = node_handler.subscribe("/tello/image_raw", 1, &ImageGrabber::GrabImage, &igb);
 
     setup_ros_publishers(node_handler, image_transport, rpy_rad);
 
     ros::spin();
-
+   
     // Stop all threads
     SLAM.Shutdown();
 
@@ -93,8 +103,8 @@ void ImageGrabber::GrabImage(const sensor_msgs::ImageConstPtr& msg)
         ROS_ERROR("cv_bridge exception: %s", e.what());
         return;
     }
-
-    // ORB-SLAM3 runs in TrackMonocular()
+    
+        // ORB-SLAM3 runs in TrackMonocular()
     Sophus::SE3f Tcc0 = mpSLAM->TrackMonocular(cv_ptr->image, cv_ptr->header.stamp.toSec());
     Sophus::SE3f Twc = (Tcc0 * Tc0w).inverse();
 
@@ -103,4 +113,5 @@ void ImageGrabber::GrabImage(const sensor_msgs::ImageConstPtr& msg)
     publish_ros_camera_pose(Twc, msg_time);
     publish_ros_tf_transform(Twc, world_frame_id, cam_frame_id, msg_time);
     publish_ros_tracked_mappoints(mpSLAM->GetTrackedMapPoints(), msg_time);
+
 }
